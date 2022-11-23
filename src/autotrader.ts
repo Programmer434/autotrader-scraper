@@ -1,7 +1,16 @@
 import * as puppeteer from 'puppeteer'
 
 async function start() {
-    const browser = await puppeteer.launch()
+    let browser: puppeteer.Browser
+    if (process.env.IS_CI === 'true') {
+        browser = await puppeteer.launch({
+            executablePath: '/usr/bin/google-chrome-stable',
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        })
+    } else {
+        browser = await puppeteer.launch()
+    }
+
     const page = await browser.newPage()
 
     //This is needed otherwise request gets blocked

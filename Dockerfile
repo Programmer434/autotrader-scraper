@@ -1,7 +1,8 @@
-FROM node:18.12-buster as base
+FROM node:slim as builder
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV IS_CI true
 
 # Install Google Chrome Stable and fonts
 # Note: this installs the necessary libs to make the browser work with Puppeteer.
@@ -12,12 +13,12 @@ RUN apt-get update && apt-get install gnupg wget -y && \
   apt-get install google-chrome-stable -y --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr
+WORKDIR /app
 
 COPY package.json ./
-
 COPY tsconfig.json ./
 COPY babel.config.js ./
+COPY jest.config.ts ./
 
 COPY src ./src
 
@@ -25,12 +26,11 @@ RUN ls -a
 
 RUN npm install
 
-FROM base AS test
-RUN echo "helloaa"
-RUN npm run test
-RUN echo "hello"
+FROM builder AS test
 
-FROM base AS prodbuild
+RUN npm run test
+
+FROM builder AS deploy
 
 RUN npm run build
 
