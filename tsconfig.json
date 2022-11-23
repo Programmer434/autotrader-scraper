@@ -1,9 +1,9 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "lib": ["es5", "es6", "dom", "dom.iterable"],
-    "target": "es2018",
-    "strict": true
-  },
-  "include": ["src", "node_modules/@types/puppeteer/index.d.ts"]
+    "compilerOptions": {
+        "module": "commonjs",
+        "lib": ["es5", "es6", "dom", "dom.iterable"],
+        "target": "ESNext",
+        "strict": true
+    },
+    "include": ["src", "node_modules/@types/puppeteer/index.d.ts"]
 }
