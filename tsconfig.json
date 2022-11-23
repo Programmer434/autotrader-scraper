@@ -3,7 +3,13 @@
         "module": "commonjs",
         "lib": ["es5", "es6", "dom", "dom.iterable"],
         "target": "ESNext",
-        "strict": true
+        "noImplicitAny": true,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "outDir": "dist",
+        "rootDir": "src"
     },
-    "include": ["src", "node_modules/@types/puppeteer/index.d.ts"]
+    "include": ["src", "node_modules/@types/puppeteer/index.d.ts"],
+    "exclude": ["src/tests/**"]
 }
