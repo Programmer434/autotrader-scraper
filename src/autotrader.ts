@@ -19,7 +19,8 @@ async function start() {
     )
 
     await page.goto(
-        'https://www.autotrader.co.uk/car-search?postcode=RG5%203AY&make=Audi&model=A4&price-from=5000&price-to=10000&include-delivery-option=on&advertising-location=at_cars&page=1'
+        process.env.TARGET_URL ||
+            'https://www.autotrader.co.uk/car-search?postcode=RG5%203AY&make=Audi&model=A4&price-from=5000&price-to=10000&include-delivery-option=on&advertising-location=at_cars&page=1'
     )
 
     const carPrices = await getPrices(page)

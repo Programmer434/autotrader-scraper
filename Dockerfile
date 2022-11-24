@@ -22,8 +22,6 @@ COPY jest.config.ts ./
 
 COPY src ./src
 
-RUN ls -a
-
 RUN npm install
 
 FROM builder AS test
