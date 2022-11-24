@@ -9,6 +9,9 @@
         "build": "tsc --build",
         "start": "node dist/autotrader.js"
     },
+    "engines": {
+        "node": ">=18"
+    },
     "author": "",
     "license": "ISC",
     "devDependencies": {

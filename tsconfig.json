@@ -8,7 +8,8 @@
         "removeComments": false,
         "sourceMap": true,
         "outDir": "dist",
-        "rootDir": "src"
+        "rootDir": "src",
+        "esModuleInterop": true
     },
     "include": ["src", "node_modules/@types/puppeteer/index.d.ts"],
     "exclude": ["src/tests/**"]

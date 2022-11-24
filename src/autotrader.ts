@@ -1,5 +1,6 @@
 import * as puppeteer from 'puppeteer'
-import bunyan = require('bunyan')
+import bunyan from 'bunyan'
+
 const logger = bunyan.createLogger({ name: 'scrapertron' })
 
 async function start() {
