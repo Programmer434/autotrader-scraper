@@ -12,7 +12,11 @@ async function start() {
 
         browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome-stable',
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--single-process',
+            ],
         })
     } else {
         logger.debug('running locally')
