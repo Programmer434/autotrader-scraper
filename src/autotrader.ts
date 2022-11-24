@@ -130,7 +130,13 @@ export function carDescriptionDiscovery(
     return undefined
 }
 
-start()
-    .then(() => console.log('pupperter done'))
-    .catch((e) => console.log('it errored'))
-    .finally(() => console.log('finished'))
+function startUp() {
+    start()
+        .then(() => console.log('pupperter done'))
+        .catch((e) => console.log('it errored'))
+        .finally(() => console.log('finished'))
+
+    logger.info('startup ended')
+}
+
+startUp()
