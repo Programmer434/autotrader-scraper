@@ -1,13 +1,20 @@
 import * as puppeteer from 'puppeteer'
+import bunyan = require('bunyan')
+const logger = bunyan.createLogger({ name: 'scrapertron' })
 
 async function start() {
+    logger.info('Starting logger scraper')
+
     let browser: puppeteer.Browser
     if (process.env.IS_CI === 'true') {
+        logger.debug('running in CI env ')
+
         browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome-stable',
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         })
     } else {
+        logger.debug('running locally')
         browser = await puppeteer.launch()
     }
 
@@ -41,10 +48,9 @@ async function start() {
         finalObj = { ...finalObj, price: carPrices[index] }
         listOfCarDetails.push(finalObj)
     }
-    // console.log(listOfCarDetails[0])
 
-    // Print all the files.
-
+    logger.info('Successfully scraped page')
+    logger.info(listOfCarDetails[0])
     await browser.close()
 }
 
