@@ -124,9 +124,4 @@ export function carDescriptionDiscovery(
     return undefined
 }
 
-function startApp() {
-    start().catch((e) => logger.error(e))
-    return
-}
-
-startApp()
+start()
