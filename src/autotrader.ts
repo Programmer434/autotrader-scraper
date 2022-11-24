@@ -8,7 +8,7 @@ async function start() {
 
     let browser: puppeteer.Browser
     if (process.env.IS_CI === 'true') {
-        logger.debug('running in CI env ')
+        logger.info('running in CI env ')
 
         browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome-stable',
@@ -18,13 +18,14 @@ async function start() {
                 '--single-process',
             ],
         })
+        logger.info('browser started')
     } else {
-        logger.debug('running locally')
+        logger.info('running locally')
         browser = await puppeteer.launch()
     }
 
     const page = await browser.newPage()
-
+    logger.info('page created')
     //This is needed otherwise request gets blocked
     page.setUserAgent(
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'
@@ -34,7 +35,7 @@ async function start() {
         process.env.TARGET_URL ||
             'https://www.autotrader.co.uk/car-search?postcode=RG5%203AY&make=Audi&model=A4&price-from=5000&price-to=10000&include-delivery-option=on&advertising-location=at_cars&page=1'
     )
-
+    logger.info('loaded page')
     const carPrices = await getPrices(page)
 
     const subStories = await getCarSubDetails(page)
