@@ -1,6 +1,13 @@
 import * as puppeteer from 'puppeteer'
 import bunyan from 'bunyan'
 
+import {
+    DynamoDBClient,
+    ListGlobalTablesCommand,
+} from '@aws-sdk/client-dynamodb'
+
+const client = new DynamoDBClient({ region: 'eu-west-1' })
+
 const logger = bunyan.createLogger({ name: 'scrapertron' })
 
 async function start() {
@@ -130,13 +137,19 @@ export function carDescriptionDiscovery(
     return undefined
 }
 
-function startUp() {
-    start()
-        .then(() => console.log('pupperter done'))
-        .catch((e) => console.log('it errored'))
-        .finally(() => console.log('finished'))
+export async function testMongo() {
+    const command = new ListGlobalTablesCommand({})
+    const response = await client.send(command)
+    return response
+}
 
-    logger.info('startup ended')
+function startUp() {
+    // start()
+    //     .then(() => logger.info('Scraper successfully finished'))
+    //     .catch((e) => logger.error(e, 'Scraper threw an error'))
+    testMongo()
+        .then(() => logger.info('Mongo finished'))
+        .catch((e) => logger.error(e, 'Mongo threw an error'))
 }
 
 startUp()

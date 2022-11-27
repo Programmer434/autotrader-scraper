@@ -6,6 +6,15 @@ import {
 import { expect } from '@jest/globals'
 import { Page } from 'puppeteer'
 
+//Mongo things
+import { mockClient } from 'aws-sdk-client-mock'
+import {
+    DynamoDBClient,
+    ListGlobalTablesCommand,
+} from '@aws-sdk/client-dynamodb'
+const ddbMock = mockClient(DynamoDBClient)
+import { testMongo } from '../autotrader'
+
 describe('AutoTrader scaper gets correct details', () => {
     let page: Page
     beforeAll(async () => {
@@ -37,5 +46,25 @@ describe('AutoTrader scaper gets correct details', () => {
         ['unsupportedThing', undefined],
     ])('should classify each attribute correctly (%s, %s)', (a, expected) => {
         expect(carDescriptionDiscovery(a)).toBe(expected)
+    })
+})
+
+describe(' Mongo calls', () => {
+    beforeEach(() => {
+        ddbMock.reset()
+    })
+    it('test a thing', async () => {
+        ddbMock.on(ListGlobalTablesCommand).resolves({
+            GlobalTables: [{ GlobalTableName: 'testTable' }],
+        })
+        const result = await testMongo()
+
+        expect(result).toEqual({
+            GlobalTables: [
+                {
+                    GlobalTableName: 'testTable',
+                },
+            ],
+        })
     })
 })
